@@ -1,0 +1,149 @@
+{
+  "name": "mcp-multiagent",
+  "version": "1.0.0",
+  "description": "MCP Multi-Agent System with Qwen, Ollama, Grok-Coder-4, and MiniMax-M2 support",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "npm run start:top5 && node src/start.js",
+    "dev": "node src/start.js",
+    "dev:all": "npm run start:top5 && npm run dev",
+    "start:top5": "cd top5-server && node index.js",
+    "test": "npm run test:unit && npm run test:integration",
+    "test:unit": "node tests/unit/test-logger.js",
+    "test:integration": "node tests/test-top5-integration.js",
+    "test:health": "curl http://localhost:3737/health",
+    "lint": "eslint src/**/*.js",
+    "format": "prettier --write src/**/*.js",
+    "build": "npm run lint && npm run format",
+    "docs": "jsdoc src/**/*.js -d docs",
+    "clean": "rm -rf logs/* runtime/*",
+    "setup": "npm install && mkdir -p logs config runtime",
+    "monitor": "node scripts/monitor.js",
+    "benchmark": "node scripts/benchmark.js",
+    "oc": "node src/cli/oc.js",
+    "knowledge:search": "node scripts/local-knowledge-search.js",
+    "knowledge:list": "node scripts/local-knowledge-search.js list"
+    "publishConfig": {
+    "registry": "https://npm.pkg.github.com
+  },
+  "keywords": [
+    "mcp",
+    "multi-agent",
+    "ai",
+    "llm",
+    "qwen",
+    "ollama",
+    "grok",
+    "minimax",
+    "model-switching",
+    "fallback",
+    "circuit-breaker",
+    "load-balancing"
+  ],
+  "author": "MCP Multi-Agent System",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.975.0",
+    "@browserbasehq/mcp-server-browserbase": "^2.4.1",
+    "@genkit-ai/mcp": "^1.31.0",
+    "@modelcontextprotocol/sdk": "^1.25.2",
+    "@xenova/transformers": "^2.17.2",
+    "chokidar": "^5.0.0",
+    "chrome-remote-interface": "^0.33.3",
+    "commander": "^14.0.2",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "fs-extra": "^11.2.0",
+    "node-fetch": "^3.3.2",
+    "playwright": "^1.57.0",
+    "playwright-ghost": "^0.16.0",
+    "strip-json-comments": "^5.0.3",
+    "tailwind-merge": "^3.4.0",
+    "typescript": "^6.0.2",
+    "ws": "^8.20.0",
+    "yaml": "^2.8.2"
+  },
+  "devDependencies": {
+    "benchmark": "^2.1.4",
+    "chai": "^4.0.0",
+    "eslint": "^8.0.0",
+    "jsdoc": "^4.0.0",
+    "mocha": "^10.0.0",
+    "prettier": "^2.0.0",
+    "supertest": "^6.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-org/mcp-multiagent.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-org/mcp-multiagent/issues"
+  },
+  "homepage": "https://github.com/your-org/mcp-multiagent#readme",
+  "mcp": {
+    "server": {
+      "command": "node",
+      "args": [
+        "src/start.js"
+      ],
+      "env": {
+        "NODE_ENV": "production"
+      }
+    },
+    "capabilities": {
+      "tools": true,
+      "resources": true,
+      "prompts": true,
+      "logging": true,
+      "completion": true
+    },
+    "models": {
+      "qwen": {
+        "endpoint": "http://localhost:3737/v1/chat/completions",
+        "type": "openai-compatible"
+      },
+      "ollama": {
+        "endpoint": "http://localhost:3737/api/generate",
+        "type": "ollama"
+      },
+      "grok-coder-4": {
+        "endpoint": "https://api.grok.ai/v1/chat/completions",
+        "type": "openai-compatible"
+      },
+      "minimax-m2": {
+        "endpoint": "https://api.minimax.chat/v1/chat/completions",
+        "type": "openai-compatible"
+      }
+    }
+  },
+  "config": {
+    "port": 3737,
+    "host": "localhost",
+    "timeout": 30000,
+    "maxWorkers": 10,
+    "logLevel": "info"
+  },
+  "files": [
+    "src/",
+    "agent.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "bin": {
+    "mcp-multiagent": "src/start.js"
+  },
+  "preferGlobal": false,
+  "private": false,
+  "os": [
+    "linux",
+    "darwin",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ]
+}

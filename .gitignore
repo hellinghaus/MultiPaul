@@ -1,0 +1,11 @@
+node_modules/
+.claude
+.DS_Store
+.idea
+.jj
+.kilocode
+.env
+I:\VSCode\
+
+# Contox local memory
+.contox/
